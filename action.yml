@@ -17,7 +17,7 @@ runs:
 
   steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Detect package manager
       id: detect-package-manager
@@ -37,11 +37,15 @@ runs:
         fi
 
     - name: Set up Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}
         cache: ${{ steps.detect-package-manager.outputs.name }}
         registry-url: ${{ inputs.registry-url }}
+
+    - name: Update npm
+      shell: bash
+      run: npm install -g npm@latest
 
     - name: Install dependencies
       shell: bash
